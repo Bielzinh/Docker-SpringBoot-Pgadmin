@@ -1,4 +1,15 @@
-FROM maven:3.5.2-jdk-8-alpine AS maven_build
+FROM ubuntu:latest
+
+RUN apt-get update -y\
+&&  apt-get install openjdk-8-jdk -y
+
+RUN apt install wget -y
+
+RUN mkdir /data
+
+WORKDIR /opt
+
+RUN apt install maven -y
 
 COPY pom.xml /tmp/
 
@@ -6,12 +17,4 @@ COPY src /tmp/src/
 
 WORKDIR /tmp/
 
-RUN mvn package
-
-FROM openjdk:8-jdk-alpine
-
-EXPOSE 8080
-
-CMD java -jar /data/cadastro-0.0.1-SNAPSHOT.jar
-
-COPY --from=maven_build /tmp/target/cadastro-0.0.1-SNAPSHOT.jar /data/cadastro-0.0.1-SNAPSHOT.jar
+CMD mvn package ; mv target/cadastro-0.0.1-SNAPSHOT.jar /data/cadastro-0.0.1-SNAPSHOT.jar ; java -jar /data/cadastro-0.0.1-SNAPSHOT.jar
