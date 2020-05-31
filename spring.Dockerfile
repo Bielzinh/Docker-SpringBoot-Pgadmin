@@ -15,6 +15,10 @@ COPY pom.xml /tmp/
 
 COPY src /tmp/src/
 
-WORKDIR /tmp/
+COPY docker/cmd.sh /
 
-CMD mvn package ; mv target/cadastro-0.0.1-SNAPSHOT.jar /data/cadastro-0.0.1-SNAPSHOT.jar ; java -jar /data/cadastro-0.0.1-SNAPSHOT.jar
+WORKDIR /
+
+RUN chmod +x cmd.sh
+
+CMD ./cmd.sh

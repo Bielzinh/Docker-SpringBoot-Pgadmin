@@ -1,0 +1,31 @@
+version: '3.3'
+
+networks:
+  default:
+    external:
+      name: spring
+
+services: 
+ 
+  postgres:
+    build:
+      context: .
+      dockerfile: postgres.Dockerfile
+    container_name: postgres
+    ports: 
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cadastro
+      
+  spring:
+    container_name: spring
+    build:
+      context: .
+      dockerfile: spring.Dockerfile
+    depends_on:
+      - postgres
+    ports: 
+      - "8081:8080"
+    env_file: docker/.env-spring

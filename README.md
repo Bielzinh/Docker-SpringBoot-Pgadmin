@@ -1,2 +1,2 @@
-curl localhost:8080/api/cadastros
+curl localhost:8080/api/cadastro
 
