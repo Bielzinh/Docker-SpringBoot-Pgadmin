@@ -7,6 +7,6 @@ docker network create ${NETWORK_NAME}
 
 docker-compose up -d --build --force-recreate
 
-sleep 180
+sleep 210
 
 docker exec postgres bash -c './dump.sh'
